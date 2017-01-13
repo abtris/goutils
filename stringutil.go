@@ -1,7 +1,19 @@
-package utils
+/**
+* @Author: shuxian
+* @Date:   18-Oct-2016
+* @Email:  shuxian@jawave.com/printfcoder@gmail.com
+* @Project: jawave-center/register
+* @Last modified by:   shuxian
+* @Last modified time: 13-Jan-2017
+ */
+
+package goutils
 
 import (
-	"math/rand"
+	crand "crypto/rand"
+	"fmt"
+	"io"
+	mrand "math/rand"
 	"regexp"
 	"strconv"
 	"strings"
@@ -16,10 +28,17 @@ Date: 2016-4-8
 */
 
 const (
-	KC_RAND_KIND_NUM   = 0 // 纯数字
-	KC_RAND_KIND_LOWER = 1 // 小写字母
-	KC_RAND_KIND_UPPER = 2 // 大写字母
-	KC_RAND_KIND_ALL   = 3 // 数字、大小写字母
+	// KCRandKindNum  纯数字
+	KCRandKindNum = 0
+
+	// KCRandKindLower 小写字母
+	KCRandKindLower = 1
+
+	// KCRandKindUpper 大写字母
+	KCRandKindUpper = 2
+
+	// KCRandKindAll 数字、大小写字母
+	KCRandKindAll = 3
 )
 
 //AllStringIsEmpty 判断传入的字符串是否全是空的
@@ -63,19 +82,20 @@ func IDArrayToSQLInString(in []int) string {
 //Krand 随机字符串
 func Krand(size int, kind int) []byte {
 	ikind, kinds, result := kind, [][]int{[]int{10, 48}, []int{26, 97}, []int{26, 65}}, make([]byte, size)
-	is_all := kind > 2 || kind < 0
-	rand.Seed(time.Now().UnixNano())
+	isAll := kind > 2 || kind < 0
+	mrand.Seed(time.Now().UnixNano())
 	for i := 0; i < size; i++ {
-		if is_all { // random ikind
-			ikind = rand.Intn(3)
+		if isAll {
+			// random ikind
+			ikind = mrand.Intn(3)
 		}
 		scope, base := kinds[ikind][0], kinds[ikind][1]
-		result[i] = uint8(base + rand.Intn(scope))
+		result[i] = uint8(base + mrand.Intn(scope))
 	}
 	return result
 }
 
-//StringsHasOneEmpty 判断传入的字符串至少有一条是空的
+//BytesToString 判断传入的字符串至少有一条是空的
 func BytesToString(in ...byte) string {
 	var ret string
 	for _, str := range in {
@@ -84,6 +104,7 @@ func BytesToString(in ...byte) string {
 	return ret
 }
 
+// ReplaceSQLSpecialPunctuation 替换sql特殊字串
 func ReplaceSQLSpecialPunctuation(in string) string {
 	return strings.NewReplacer("'", "\\'", ",", "\\,").Replace(in)
 }
@@ -106,12 +127,13 @@ func MakeTimeSerialNum(prefix, time string, randStart, randEnd int) string {
 	return prefix + reg.ReplaceAllString(time, "") + strconv.Itoa(RandInt(randStart, randEnd))
 }
 
+// HasSubString 是否有字串
 func HasSubString(in, sub string) bool {
 	reg, _ := regexp.Compile(sub)
 	return reg.MatchString(in)
 }
 
-//StringEqualto
+//StringEqualto 是否相等，cas 大小敏感
 func StringEqualto(in1, in2 string, cas bool) bool {
 	var reg *regexp.Regexp
 	if cas {
@@ -155,4 +177,33 @@ func StringSubStrBetweenHunger(in, start, end string) string {
 func StringTrimNewLine(in, rpls string) string {
 	reg, _ := regexp.Compile(`\n`)
 	return reg.ReplaceAllString(in, rpls)
+}
+
+//StringPhoneNumOrEmail 是手机还是email格式{0:都不是,1:email,2:手机}
+func StringPhoneNumOrEmail(in string) int {
+	reg, _ := regexp.Compile(`^1[34578]\d{9}$`)
+	if reg.MatchString(in) {
+		return 2
+	}
+
+	reg = regexp.MustCompile(`^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$`)
+	if reg.MatchString(in) {
+		return 1
+	}
+
+	return 0
+}
+
+// NewUUID generates a random UUID according to RFC 4122
+func NewUUID() (string, error) {
+	uuid := make([]byte, 16)
+	n, err := io.ReadFull(crand.Reader, uuid)
+	if n != len(uuid) || err != nil {
+		return "", err
+	}
+	// variant bits; see section 4.1.1
+	uuid[8] = uuid[8]&^0xc0 | 0x80
+	// version 4 (pseudo-random); see section 4.1.3
+	uuid[6] = uuid[6]&^0xf0 | 0x40
+	return fmt.Sprintf("%x-%x-%x-%x-%x", uuid[0:4], uuid[4:6], uuid[6:8], uuid[8:10], uuid[10:]), nil
 }

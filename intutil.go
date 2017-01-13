@@ -1,4 +1,14 @@
-package utils
+/**
+* 整形工具集
+* @Author: shuxian
+* @Date:   14-Oct-2016
+* @Email:  shuxian@jawave.com/printfcoder@gmail.com
+* @Project: jawave-center/register
+* @Last modified by:   shuxian
+* @Last modified time: 13-Jan-2017
+ */
+
+package goutils
 
 import (
 	"fmt"
@@ -8,17 +18,7 @@ import (
 	"time"
 )
 
-/*
-
-整形工具集
-
-Author: SX
-Date: 2016-4-8
-
-//GenerateRandomNumber 生成count个[start,end)结束的不重复的随机数
-// RandInt 指定范围内的随机数
-*/
-//GenerateRandomNumber 生成count个[start,end)结束的不重复的随机数
+//GenerateRandomNumber 生成count个[start,end)结束的不重复的随机数  RandInt 指定范围内的随机数
 func GenerateRandomNumber(start int, end int, count int) ([]int, error) {
 	//范围检查
 	if end < start {
@@ -53,10 +53,11 @@ func GenerateRandomNumber(start int, end int, count int) ([]int, error) {
 
 // RandInt 指定范围内的随机数
 func RandInt(min, max int) int {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	if min >= max || min == 0 || max == 0 {
 		return max
 	}
-	return rand.Intn(max-min) + min
+	return r.Intn(max-min) + min
 }
 
 //StringsIsFloat 判断字符串是不是float 类型的数据
@@ -102,11 +103,12 @@ func StringIsIntAndToi(in string) (int, bool) {
 
 //StringIsFloat64AndParse 判断字符串是不是float64, 类型的数据，是则顺便转换
 func StringIsFloat64AndParse(in string) (float64, bool) {
-	if ret, err := strconv.ParseFloat(in, 32); err != nil {
+	ret, err := strconv.ParseFloat(in, 32)
+	if err != nil {
 		return 0, false
-	} else {
-		return ret, true
 	}
+
+	return ret, true
 }
 
 //StringIsNotEmptyAndToa 判断字符串是不是长度大于0，是则传出
