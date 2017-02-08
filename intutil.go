@@ -1,14 +1,13 @@
+package goutils
+
 /**
 * 整形工具集
 * @Author: shuxian
 * @Date:   14-Oct-2016
 * @Email:  shuxian@jawave.com/printfcoder@gmail.com
-* @Project: jawave-center/register
 * @Last modified by:   shuxian
-* @Last modified time: 13-Jan-2017
+* @Last modified time: 07-Feb-2017
  */
-
-package goutils
 
 import (
 	"fmt"
