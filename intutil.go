@@ -110,7 +110,7 @@ func StringIsFloat64AndParse(in string) (float64, bool) {
 	return ret, true
 }
 
-//StringIsNotEmptyAndToa 判断字符串是不是长度大于0，是则传出
+// StringIsNotEmptyAndToa 判断字符串是不是长度大于0，是则传出
 func StringIsNotEmptyAndToa(in string) (string, bool) {
 	if len(in) == 0 {
 		return "", false
@@ -118,13 +118,13 @@ func StringIsNotEmptyAndToa(in string) (string, bool) {
 	return in, true
 }
 
-//IntStartWith 整形数据是否以另一个整形开头
+// IntStartWith 整形数据是否以另一个整形开头
 func IntStartWith(origin, start int) bool {
 	reg := regexp.MustCompile("^" + strconv.Itoa(start))
 	return reg.MatchString(strconv.Itoa(origin))
 }
 
-//IntIsBetween 数字是否在输入之间
+// IntIsBetween the number in is between start and end
 func IntIsBetween(in, start, end int) bool {
 	if in < start {
 		return false
@@ -135,4 +135,16 @@ func IntIsBetween(in, start, end int) bool {
 	}
 
 	return true
+}
+
+// IntIsIn the number is in the array
+func IntIsIn(in int, arr ...int) bool {
+
+	for i, j := 0, len(arr); i < j; i++ {
+		if in == arr[i] {
+			return true
+		}
+	}
+
+	return false
 }
