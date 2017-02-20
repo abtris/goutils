@@ -19,22 +19,15 @@ import (
 	"time"
 )
 
-/*
-字符串工具集
-
-Author: SX
-Date: 2016-4-8
-*/
-
 const (
-	// KCRandKindNum  纯数字
-	KCRandKindNum = 0
+	// RandKindNum  all number
+	RandKindNum = 0
 
-	// KCRandKindLower 小写字母
-	KCRandKindLower = 1
+	// RandKindLower lower
+	RandKindLower = 1
 
-	// KCRandKindUpper 大写字母
-	KCRandKindUpper = 2
+	// RandKindUpper Upper
+	RandKindUpper = 2
 
 	// KCRandKindAll 数字、大小写字母
 	KCRandKindAll = 3

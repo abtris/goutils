@@ -1,14 +1,5 @@
 package goutils
 
-/**
-* 整形工具集
-* @Author: shuxian
-* @Date:   14-Oct-2016
-* @Email:  shuxian@jawave.com/printfcoder@gmail.com
-* @Last modified by:   shuxian
-* @Last modified time: 07-Feb-2017
- */
-
 import (
 	"fmt"
 	"math/rand"
@@ -17,7 +8,7 @@ import (
 	"time"
 )
 
-//GenerateRandomNumber 生成count个[start,end)结束的不重复的随机数  RandInt 指定范围内的随机数
+// GenerateRandomNumber generate the number of count random number, between ->[start,end)
 func GenerateRandomNumber(start int, end int, count int) ([]int, error) {
 	//范围检查
 	if end < start {
@@ -50,7 +41,7 @@ func GenerateRandomNumber(start int, end int, count int) ([]int, error) {
 	return nums, nil
 }
 
-// RandInt 指定范围内的随机数
+// RandInt rand num between min and max
 func RandInt(min, max int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	if min >= max || min == 0 || max == 0 {
@@ -59,7 +50,7 @@ func RandInt(min, max int) int {
 	return r.Intn(max-min) + min
 }
 
-//StringsIsFloat 判断字符串是不是float 类型的数据
+// StringsIsFloat return the string are all float
 func StringsIsFloat(in ...string) bool {
 	reg, _ := regexp.Compile(`^\d*\.\d*$`)
 	for _, v := range in {
@@ -70,7 +61,7 @@ func StringsIsFloat(in ...string) bool {
 	return true
 }
 
-//StringsIsInt 判断字符串是不是int 类型的数据
+// StringsIsInt return the string are all int
 func StringsIsInt(in ...string) bool {
 	reg, _ := regexp.Compile(`^\d+$`)
 	for _, v := range in {
@@ -81,7 +72,7 @@ func StringsIsInt(in ...string) bool {
 	return true
 }
 
-//StringIsInt 判断字符串是不是int, 类型的数据，是则顺便转换
+// StringIsInt return the string is int
 func StringIsInt(in string) bool {
 	reg, _ := regexp.Compile(`^-?\d+$`)
 	if !reg.MatchString(in) {
@@ -90,7 +81,7 @@ func StringIsInt(in string) bool {
 	return true
 }
 
-//StringIsIntAndToi 判断字符串是不是int, 类型的数据，是则顺便转换
+// StringIsIntAndToi return the string are all int, if true , convert them all
 func StringIsIntAndToi(in string) (int, bool) {
 	reg, _ := regexp.Compile(`^-?\d+$`)
 	if !reg.MatchString(in) {
@@ -100,7 +91,7 @@ func StringIsIntAndToi(in string) (int, bool) {
 	return ret, true
 }
 
-//StringIsFloat64AndParse 判断字符串是不是float64, 类型的数据，是则顺便转换
+// StringIsFloat64AndParse  return the string are all float64, if true , convert them all
 func StringIsFloat64AndParse(in string) (float64, bool) {
 	ret, err := strconv.ParseFloat(in, 32)
 	if err != nil {
@@ -110,7 +101,7 @@ func StringIsFloat64AndParse(in string) (float64, bool) {
 	return ret, true
 }
 
-// StringIsNotEmptyAndToa 判断字符串是不是长度大于0，是则传出
+// StringIsNotEmptyAndToa return the string is not empty, if true , return both it and result
 func StringIsNotEmptyAndToa(in string) (string, bool) {
 	if len(in) == 0 {
 		return "", false
@@ -118,7 +109,7 @@ func StringIsNotEmptyAndToa(in string) (string, bool) {
 	return in, true
 }
 
-// IntStartWith 整形数据是否以另一个整形开头
+// IntStartWith return the num if starts with 'start'
 func IntStartWith(origin, start int) bool {
 	reg := regexp.MustCompile("^" + strconv.Itoa(start))
 	return reg.MatchString(strconv.Itoa(origin))
