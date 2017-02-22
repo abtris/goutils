@@ -33,7 +33,7 @@ const (
 	KCRandKindAll = 3
 )
 
-//AllStringIsEmpty 判断传入的字符串是否全是空的
+// AllStringIsEmpty 判断传入的字符串是否全是空的
 func AllStringIsEmpty(in ...string) bool {
 	for _, str := range in {
 		if str == "" {
@@ -43,7 +43,7 @@ func AllStringIsEmpty(in ...string) bool {
 	return true
 }
 
-//StringsHasOneEmpty 判断传入的字符串至少有一条是空的
+// StringsHasOneEmpty 判断传入的字符串至少有一条是空的
 func StringsHasOneEmpty(in ...string) bool {
 	for _, str := range in {
 		if len(str) == 0 {
@@ -53,7 +53,7 @@ func StringsHasOneEmpty(in ...string) bool {
 	return false
 }
 
-//IntArrayToStringArray 将Int型数组转成字符串型数组
+// IntArrayToStringArray 将Int型数组转成字符串型数组
 func IntArrayToStringArray(in []int) []string {
 	ret := make([]string, 0, len(in))
 	for _, v := range in {
@@ -62,7 +62,7 @@ func IntArrayToStringArray(in []int) []string {
 	return ret
 }
 
-//IDArrayToSQLInString 将ID数组转成SQL in 字符串
+// IDArrayToSQLInString 将ID数组转成SQL in 字符串
 func IDArrayToSQLInString(in []int) string {
 	if len(in) > 0 {
 		ret := strings.Join(IntArrayToStringArray(in), "','")
@@ -71,7 +71,7 @@ func IDArrayToSQLInString(in []int) string {
 	return ""
 }
 
-//Krand 随机字符串
+// Krand 随机字符串
 func Krand(size int, kind int) []byte {
 	ikind, kinds, result := kind, [][]int{[]int{10, 48}, []int{26, 97}, []int{26, 65}}, make([]byte, size)
 	isAll := kind > 2 || kind < 0
@@ -87,7 +87,7 @@ func Krand(size int, kind int) []byte {
 	return result
 }
 
-//BytesToString 判断传入的字符串至少有一条是空的
+// BytesToString 判断传入的字符串至少有一条是空的
 func BytesToString(in ...byte) string {
 	var ret string
 	for _, str := range in {
@@ -101,19 +101,19 @@ func ReplaceSQLSpecialPunctuation(in string) string {
 	return strings.NewReplacer("'", "\\'", ",", "\\,").Replace(in)
 }
 
-//IsEndWith 以指定char 结尾
+// IsEndWith 以指定char 结尾
 func IsEndWith(in, char string) bool {
 	reg, _ := regexp.Compile(char + `$`)
 	return reg.MatchString(in)
 }
 
-//IsStartWith 以指定char 开头
+// IsStartWith 以指定char 开头
 func IsStartWith(in, char string) bool {
 	reg, _ := regexp.Compile(`^` + char)
 	return reg.MatchString(in)
 }
 
-//MakeTimeSerialNum 以时间为基准生成以某标识开头，指定长度随机数字结尾的编号，适用于单号、流水号等
+// MakeTimeSerialNum 以时间为基准生成以某标识开头，指定长度随机数字结尾的编号，适用于单号、流水号等
 func MakeTimeSerialNum(prefix, time string, randStart, randEnd int) string {
 	reg, _ := regexp.Compile(`-|:|\s`)
 	return prefix + reg.ReplaceAllString(time, "") + strconv.Itoa(RandInt(randStart, randEnd))
@@ -137,7 +137,7 @@ func StringEqualto(in1, in2 string, cas bool) bool {
 	return reg.MatchString(in2)
 }
 
-//StringIsIn 判断字符串是否在输入串组中
+// StringIsIn 判断字符串是否在输入串组中
 func StringIsIn(in string, arg ...string) bool {
 	for _, v := range arg {
 		if in == v {
@@ -147,25 +147,43 @@ func StringIsIn(in string, arg ...string) bool {
 	return false
 }
 
-//StringIsHalfWidthNoSpace 判断是不是半角字符--不能有空格
+// StringIsHalfWidthNoSpace 判断是不是半角字符--不能有空格
 func StringIsHalfWidthNoSpace(in string) bool {
 	reg, _ := regexp.Compile(`^[\d\w]+$`)
 	return reg.MatchString(in)
 }
 
-//StringIsHalfWidth  判断是不是半角字符
+// StringIsHalfWidth  判断是不是半角字符
 func StringIsHalfWidth(in string) bool {
 	reg, _ := regexp.Compile(`^[\d\s\w]+$`)
 	return reg.MatchString(in)
 }
 
-//StringSubStrBetweenHunger 找到字符区间的字符串-饥饿匹配，不处理正则自有特殊字符
+// StringSubStrBetweenHunger 找到字符区间的字符串-饥饿匹配，不处理正则自有特殊字符
 func StringSubStrBetweenHunger(in, start, end string) string {
 	reg, _ := regexp.Compile(`.*` + start + "(.*)" + end + ".*")
 	return reg.ReplaceAllString(in, "$1")
 }
 
-//StringTrimNewLine 清除换行,rpls为替换符
+// StringSubStrBetweenIndexes substr between start and end
+func StringSubStrBetweenIndexes(in string, start, end int) string {
+	str2 := []rune(in)
+	return string(str2[len(str2)-start : len(str2)-start+end])
+}
+
+// StringSubStrAfterIndex substr after the index
+func StringSubStrAfterIndex(in string, index int) string {
+
+	str2 := []rune(in)
+	if index > 0 && len(str2) > index {
+		return string(str2[index:])
+	} else if index < 0 && len(str2) > -(index) {
+		return string(str2[len(str2)+index:])
+	}
+	return ""
+}
+
+// StringTrimNewLine 清除换行,rpls为替换符
 func StringTrimNewLine(in, rpls string) string {
 	reg, _ := regexp.Compile(`\n`)
 	return reg.ReplaceAllString(in, rpls)

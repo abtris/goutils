@@ -43,10 +43,7 @@ func GetTimeIntervalBlocks(model int, begin, end time.Time) (blocks *TimeInterva
 
 		blocks = &TimeIntervalBlocks{}
 		theDayAfterLastDayBegin := GetOneDayBeginOfTime(end).Add(24 * time.Hour)
-		fmt.Println(theDayAfterLastDayBegin)
 		for temp := begin; temp.Before(theDayAfterLastDayBegin); temp = temp.Add(24 * time.Hour) {
-			fmt.Println(GetOneDayBeginOfTime(temp))
-			fmt.Println(GetOneDayEndOfTime(temp))
 			blocks.Blocks = append(blocks.Blocks, &TimeIntervalBlock{GetOneDayBeginOfTime(temp), GetOneDayEndOfTime(temp)})
 		}
 		return blocks, nil
