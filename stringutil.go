@@ -29,8 +29,8 @@ const (
 	// RandKindUpper Upper
 	RandKindUpper = 2
 
-	// KCRandKindAll 数字、大小写字母
-	KCRandKindAll = 3
+	// RandKindAll number with string
+	RandKindAll = 3
 )
 
 // AllStringIsEmpty 判断传入的字符串是否全是空的
@@ -71,8 +71,8 @@ func IDArrayToSQLInString(in []int) string {
 	return ""
 }
 
-// Krand 随机字符串
-func Krand(size int, kind int) []byte {
+// StringRandWithSize Rand ize string
+func StringRandWithSize(size int, kind int) []byte {
 	ikind, kinds, result := kind, [][]int{[]int{10, 48}, []int{26, 97}, []int{26, 65}}, make([]byte, size)
 	isAll := kind > 2 || kind < 0
 	mrand.Seed(time.Now().UnixNano())

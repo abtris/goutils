@@ -12,7 +12,7 @@ import (
 func GenerateRandomNumber(start int, end int, count int) ([]int, error) {
 	//范围检查
 	if end < start {
-		return nil, fmt.Errorf("utils:GenerateRandomNumber随机范围结束数字小于开始数字")
+		return nil, fmt.Errorf("utils:GenerateRandomNumber random number should between start and end")
 	}
 
 	var temp = count
