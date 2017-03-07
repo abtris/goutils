@@ -64,6 +64,14 @@ func GetOneDayEndOfTime(t time.Time) time.Time {
 	return GetOneDayBeginOfTime(t).Add(24 * time.Hour).Add(-1 * time.Nanosecond)
 }
 
+// TimeWeekOffset  to offset weeks of v
+// eg. if v = 1, it returns t of next week, if v = -1 ,it returns last week
+func TimeWeekOffset(t time.Time, v int64) time.Time {
+	d := time.Duration(v) * 7 * 24 * time.Hour
+	t = t.Add(d)
+	return t
+}
+
 // TimeBeginningOfWeek return the begin of the week of t
 // bSundayFirst means that many country use the monday as the first day of week
 func TimeBeginningOfWeek(t time.Time, bSundayFirst bool) time.Time {
