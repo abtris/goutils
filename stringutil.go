@@ -179,6 +179,8 @@ func StringSubStrAfterIndex(in string, index int) string {
 		return string(str2[index:])
 	} else if index < 0 && len(str2) > -(index) {
 		return string(str2[len(str2)+index:])
+	} else if index < 0 && -index == len(str2) {
+		return in
 	}
 	return ""
 }
