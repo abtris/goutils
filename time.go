@@ -105,10 +105,3 @@ func TimeBeginningOfMonth(t time.Time) time.Time {
 func TimeEndOfMonth(t time.Time) time.Time {
 	return TimeBeginningOfMonth(t).AddDate(0, 1, -1)
 }
-
-// TimeSubDaysOfTwoDays return the days bewteen d1 and d2
-func TimeSubDaysOfTwoDays(d1 time.Time, d2 time.Time) int64 {
-	ds1 := GetOneDayBeginOfTime(d1)
-	ds2 := GetOneDayBeginOfTime(d2)
-	return int64(ds1.Sub(ds2).Hours() / 24)
-}
