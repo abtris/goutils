@@ -185,14 +185,15 @@ func StringSubStrAfterIndex(in string, index int) string {
 	return ""
 }
 
-// StringTrimNewLine 清除换行,rpls为替换符
+// StringTrimNewLine clean new line,rpls is the replacer
 func StringTrimNewLine(in, rpls string) string {
 	reg, _ := regexp.Compile(`\n`)
 	return reg.ReplaceAllString(in, rpls)
 }
 
-//StringPhoneNumOrEmail 是手机还是email格式{0:都不是,1:email,2:手机}
-func StringPhoneNumOrEmail(in string) int {
+// StringChinesePhoneNumOrEmail phone all email
+// if return 2 means 'in' is phone, 1 means it is email
+func StringChinesePhoneNumOrEmail(in string) int {
 	reg, _ := regexp.Compile(`^1[34578]\d{9}$`)
 	if reg.MatchString(in) {
 		return 2
@@ -228,4 +229,20 @@ func StringsAreAllIn(all []string, in ...string) (index int, ret bool) {
 		}
 	}
 	return 0, true
+}
+
+// StringsReplaceAllNonNumeric replace all non-numeric chars
+// keep the remaining chars and convert it to int
+// if all chars are non-numeric, then return 0
+func StringsReplaceAllNonNumeric(in string) int64 {
+
+	reg, _ := regexp.Compile(`\D`)
+	tempStr := reg.ReplaceAllString(in, "")
+
+	ret, err := strconv.ParseInt(tempStr, 10, 64)
+	if err != nil {
+		return 0
+	}
+
+	return ret
 }
