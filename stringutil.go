@@ -33,10 +33,10 @@ const (
 	RandKindAll = 3
 )
 
-// AllStringIsEmpty 判断传入的字符串是否全是空的
-func AllStringIsEmpty(in ...string) bool {
+// AllStringAreEmpty all string are empty
+func AllStringAreEmpty(in ...string) bool {
 	for _, str := range in {
-		if str == "" {
+		if str != "" {
 			return false
 		}
 	}
