@@ -16,3 +16,13 @@ func TestURLEncode(t *testing.T) {
 
 	t.Log(out)
 }
+
+func TestHasOneChar(t *testing.T) {
+	testStr := "23#$%&\\/"
+	out := goutils.StringsHasOneCharAtLeast(testStr, "#$%\\/&")
+	if !out {
+		t.Error(out)
+	}
+
+	t.Log(out)
+}

@@ -137,7 +137,7 @@ func StringEqualto(in1, in2 string, cas bool) bool {
 	return reg.MatchString(in2)
 }
 
-// StringIsIn 判断字符串是否在输入串组中
+// StringIsIn 'in' is in the arg
 func StringIsIn(in string, arg ...string) bool {
 	for _, v := range arg {
 		if in == v {
@@ -245,4 +245,19 @@ func StringsReplaceAllNonNumeric(in string) int64 {
 	}
 
 	return ret
+}
+
+// StringsHasOneCharAtLeast 'in' has one char in chars
+func StringsHasOneCharAtLeast(in, chars string) bool {
+	ins := strings.Split(in, "")
+	charsa := strings.Split(chars, "")
+	for _, v := range ins {
+		for _, u := range charsa {
+			if v == u {
+				return true
+			}
+		}
+	}
+
+	return false
 }
