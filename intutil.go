@@ -20,24 +20,19 @@ func GenerateRandomNumber(start int, end int, count int) ([]int, error) {
 		temp = end - start
 	}
 
+	var numsMap = make(map[int]bool)
 	var nums []int
-	//随机数生成器，加入时间戳保证每次生成的随机数不一样
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	for len(nums) < temp {
-		//生成随机数
-		num := r.Intn(end-start) + start
-		//查重
-		exist := false
-		for _, v := range nums {
-			if v == num {
-				exist = true
-				break
-			}
+	for len(numsMap) < temp {
+		tempInt := r.Intn(end-start) + start
+		if _, ok := numsMap[tempInt]; ok {
+			continue
 		}
-		if !exist {
-			nums = append(nums, num)
-		}
+
+		numsMap[tempInt] = true
+		nums = append(nums, tempInt)
 	}
+
 	return nums, nil
 }
 

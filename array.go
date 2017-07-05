@@ -15,6 +15,21 @@ func ArrayStringMoveDuplicates(in []string) []string {
 	return ret
 }
 
+// ArrayIntMoveDuplicates move repeated items
+func ArrayIntMoveDuplicates(in []int) []int {
+
+	ret := make([]int, 0)
+	transitMap := make(map[int]bool)
+	for i, j := 0, len(in); i < j; i++ {
+		if ok, _ := transitMap[in[i]]; !ok {
+			ret = append(ret, in[i])
+			transitMap[in[i]] = true
+		}
+	}
+
+	return ret
+}
+
 // ArrayStringMoveItems move items
 func ArrayStringMoveItems(in []string, items ...string) []string {
 	ret := make([]string, 0)
