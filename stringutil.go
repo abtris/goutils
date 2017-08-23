@@ -168,7 +168,10 @@ func StringSubStrBetweenHunger(in, start, end string) string {
 // StringSubStrBetweenIndexes substr between start and end
 func StringSubStrBetweenIndexes(in string, start, end int) string {
 	str2 := []rune(in)
-	return string(str2[len(str2)-start : len(str2)-start+end])
+	if start < 0 || end >= len(str2) {
+		return ""
+	}
+	return string(str2[start:end])
 }
 
 // StringSubStrAfterIndex substr after the index
